@@ -17,7 +17,6 @@ if __name__ == "__main__":
                     "Девон-рекс":   "Мопс"}
 
     # Проверяемы пары
-    pairs_checked = {'Сфинкс':'Такса', 'Девон-рекс':'Доберман'}
-
-    print('Вывод:')
-    is_unstable(cats_prefs, dogs_prefs, cat_dog_pairs, pairs_checked)
+    print(is_unstable(cats_prefs, dogs_prefs, cat_dog_pairs, {'Сфинкс':'Доберман'}))
+    print(is_unstable(cats_prefs, dogs_prefs, cat_dog_pairs, {'Сфинкс':'Такса'}))
+    print(is_unstable(cats_prefs, dogs_prefs, cat_dog_pairs, {'Девон-рекс':'Доберман'}))
