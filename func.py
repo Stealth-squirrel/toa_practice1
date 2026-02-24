@@ -1,53 +1,54 @@
-def is_unstable(cats_prefs, dogs_prefs, cat_dog_pairs, pair_checked):
+def is_unstable(h_prefs, s_prefs, h_s_pairs, pairs_check):
     # Создаем словари рангов
-    cat_rank = {}
-    for cat, prefs in cats_prefs.items():
-        cat_rank[cat] = {dog: i for i, dog in enumerate(prefs)}
+    h_rank = {}
+    for h, prefs in h_prefs.items():
+        h_rank[h] = {s: i for i, s in enumerate(prefs)}
 
-    dog_rank = {}
-    for dog, prefs in dogs_prefs.items():
-        dog_rank[dog] = {cat: i for i, cat in enumerate(prefs)}
-    # Словарь, где данные паросочетания кошка-собака представлены в виде собака-кошка
-    dog_cat_pairs = {dog: cat for cat, dog in cat_dog_pairs.items()}
+    s_rank = {}
+    for s, prefs in s_prefs.items():
+        s_rank[s] = {h: i for i, h in enumerate(prefs)}
+    # Словарь, где данные паросочетания больница-студент представлены в виде студент-больница
+    s_h_pairs = {s: h for h, s in h_s_pairs.items()}
 
-    # Проверка пары на неустойчивость
-    for cat, dog in pair_checked.items():
-        current_dog = cat_dog_pairs[cat]
-        current_cat = dog_cat_pairs[dog]
+    # Проверка пар на неустойчивость
+    for h, s in pairs_check.items():
+        current_s = h_s_pairs[h]
+        current_h = s_h_pairs[s]
 
-        # Проверка пары на существование
-        if current_cat == cat and current_dog == dog:
-            return f'Пара {cat} - {dog} уже установлена'
+        # Проверка пар на существование
+        if current_h == h and current_s == s:
+            return f'Пара {h} - {s} уже установлена'
             continue
 
-        # 1. Кошка предпочитает эту собаку своей текущей собаке
-        cat_prefers_dog = cat_rank[cat][dog] < cat_rank[cat][current_dog]
+        # 1. Больница предпочитает этого студента своему текущему студенту
+        h_prefers_s = h_rank[h][s] < h_rank[h][current_s]
 
-        # 2. Собака предпочитает эту кошку своей текущей кошке
-        dog_prefers_cat = dog_rank[dog][cat] < dog_rank[dog][current_cat]
+        # 2. Студент предпочитает эту больницу своей текущей больнице
+        s_prefers_h = s_rank[s][h] < s_rank[s][current_h]
 
         # Если оба условия верны -> найдена нестабильная пара
-        if cat_prefers_dog and dog_prefers_cat:
-            return f"Пара {cat} - {dog}: неустойчивое"
+        if h_prefers_s and s_prefers_h:
+            return f"Пара {h} - {s}: неустойчивое"
         else:
-            return f"Пара {cat} - {dog}: устойчивое"
+            return f"Пара {h} - {s}: устойчивое"
 
-# Предпочтения кошек
-cats_prefs = {'Сфинкс': ['Мопс', 'Такса', 'Доберман'],
-              'Мейн-кун': ['Такса', 'Мопс', 'Доберман'],
-              'Девон-рекс': ['Мопс', 'Такса', 'Доберман']}
+h_prefs = {'Atlanta': ['Xavier', 'Yolanda', 'Zeus'],
+          'Boston': ['Yolanda', 'Xavier', 'Zeus'],
+          'Chicago': ['Xavier', 'Yolanda', 'Zeus']}
 
-# Предпочтения собак
-dogs_prefs = {'Мопс': ['Мейн-кун', 'Сфинкс', 'Девон-рекс'],
-              'Такса': ['Сфинкс', 'Мейн-кун', 'Девон-рекс'],
-              'Доберман': ['Сфинкс', 'Мейн-кун', 'Девон-рекс']}
+s_prefs = {'Xavier': ['Boston', 'Atlanta', 'Chicago'],
+            'Yolanda': ['Atlanta', 'Boston', 'Chicago'],
+            'Zeus': ['Atlanta', 'Boston', 'Chicago']}
 
 # Данные пары
-cat_dog_pairs = {"Сфинкс":   "Доберман",
-                 "Мейн-кун": "Такса",
-                 "Девон-рекс":   "Мопс"}
+h_s_pairs = {"Atlanta":   "Xavier",
+                "Boston": "Zeus",
+                "Chicago":   "Yolanda"}
 
-# Проверяемы пары
-print(is_unstable(cats_prefs, dogs_prefs, cat_dog_pairs, {'Сфинкс':'Доберман'}))
-print(is_unstable(cats_prefs, dogs_prefs, cat_dog_pairs, {'Сфинкс':'Такса'}))
-print(is_unstable(cats_prefs, dogs_prefs, cat_dog_pairs, {'Девон-рекс':'Доберман'}))
+print(is_unstable(h_prefs, s_prefs, h_s_pairs, {'Atlanta':'Yolanda'})) 
+print(is_unstable(h_prefs, s_prefs, h_s_pairs, {'Boston':'Xavier'}))
+print(is_unstable(h_prefs, s_prefs, h_s_pairs, {'Boston':'Zeus'}))
+
+# Пара Atlanta - Yolanda: устойчивое
+# Пара Boston - Xavier: неустойчивое
+# Пара Boston - Zeus уже установлена
