@@ -1,22 +1,19 @@
 from func import is_unstable
 
 if __name__ == "__main__":
-    # Предпочтения кошек
-    cats_prefs = {'Сфинкс': ['Мопс', 'Такса', 'Доберман'],
-             'Мейн-кун': ['Такса', 'Мопс', 'Доберман'],
-             'Девон-рекс': ['Мопс', 'Такса', 'Доберман']}
-
-    # Предпочтения собак
-    dogs_prefs = {'Мопс': ['Мейн-кун', 'Сфинкс', 'Девон-рекс'],
-                'Такса': ['Сфинкс', 'Мейн-кун', 'Девон-рекс'],
-                'Доберман': ['Сфинкс', 'Мейн-кун', 'Девон-рекс']}
-
+    h_prefs = {'Atlanta': ['Xavier', 'Yolanda', 'Zeus'],
+              'Boston': ['Yolanda', 'Xavier', 'Zeus'],
+              'Chicago': ['Xavier', 'Yolanda', 'Zeus']}
+    
+    s_prefs = {'Xavier': ['Boston', 'Atlanta', 'Chicago'],
+                'Yolanda': ['Atlanta', 'Boston', 'Chicago'],
+                'Zeus': ['Atlanta', 'Boston', 'Chicago']}
+    
     # Данные пары
-    cat_dog_pairs = {"Сфинкс":   "Доберман",
-                    "Мейн-кун": "Такса",
-                    "Девон-рекс":   "Мопс"}
-
+    h_s_pairs = {"Atlanta":   "Xavier",
+                    "Boston": "Zeus",
+                    "Chicago":   "Yolanda"}
     # Проверяемы пары
-    print(is_unstable(cats_prefs, dogs_prefs, cat_dog_pairs, {'Сфинкс':'Доберман'}))
-    print(is_unstable(cats_prefs, dogs_prefs, cat_dog_pairs, {'Сфинкс':'Такса'}))
-    print(is_unstable(cats_prefs, dogs_prefs, cat_dog_pairs, {'Девон-рекс':'Доберман'}))
+    print(is_unstable(h_prefs, s_prefs, h_s_pairs, {'Atlanta':'Yolanda'}))
+    print(is_unstable(h_prefs, s_prefs, h_s_pairs, {'Boston':'Xavier'}))
+    print(is_unstable(h_prefs, s_prefs, h_s_pairs, {'Boston':'Zeus'}))
